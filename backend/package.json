@@ -1,0 +1,29 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "NODE_ENV=production src/server.js",
+    "dev": "NODE_ENV=development nodemon src/server.js",
+    "test": "jest"
+  },
+  "author": "SAMUEL SANTANA",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "body-parse": "^0.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "joi": "^17.9.2",
+    "morgan": "^1.10.0",
+    "path": "^0.12.7",
+    "pg": "^8.11.1",
+    "sequelize": "^6.32.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "prettier": "^3.0.0"
+  }
+}

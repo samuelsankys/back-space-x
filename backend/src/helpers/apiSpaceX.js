@@ -1,27 +1,27 @@
-import axios from "axios";
+const axios = require('axios')
 
-const baseURL = "https://api.spacexdata.com/latest";
+const baseURL = 'https://api.spacexdata.com/latest'
 
 const api = axios.create({
   baseURL,
-});
+})
 
-export const get = async (endpoint) => {
+const get = async (endpoint) => {
   try {
-    const response = await api.get(endpoint);
-    return response.data;
+    const response = await api.get(endpoint)
+    return response.data
   } catch (error) {
-    throw error;
+    throw error
   }
-};
+}
 
-export const post = async (endpoint, data) => {
+const post = async (endpoint, data) => {
   try {
-    const response = await api.post(endpoint, data);
-    return response.data;
+    const response = await api.post(endpoint, data)
+    return response.data
   } catch (error) {
-    throw error;
+    throw error
   }
-};
+}
 
-export default api;
+module.exports = { get, post }

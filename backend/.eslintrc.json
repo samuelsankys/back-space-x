@@ -13,6 +13,7 @@
   "rules": {
     "prettier/prettier": "error",
     "quotes": ["error", "single"],
-    "semi": ["error", "never"]
+    "semi": ["error", "never"],
+    "no-useless-catch": "off"
   }
 }

@@ -22,4 +22,4 @@ async function addNewLaunch() {
   }
 }
 
-module.exports = cron.schedule('00 17 * * *', addNewLaunch)
+module.exports = cron.schedule('00 09 * * *', addNewLaunch)

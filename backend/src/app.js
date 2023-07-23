@@ -1,3 +1,4 @@
+const job = require('./jobs/loadData')
 require('dotenv').config({
   path: process.env.NODE_ENV === 'production' ? '.env' : '.env.development',
 })
@@ -13,4 +14,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 require('./routes/index')(app)
 require('./services/launches/firstLoadData')()
+job.start()
+
 module.exports = app

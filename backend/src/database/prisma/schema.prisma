@@ -17,6 +17,7 @@ model Launch {
   date_local                DateTime
   date_unix                 Int
   date_utc                  DateTime
+  sequence                  Int
   name                      String    @db.VarChar(255)
   flight_number             Int
   auto_update               Boolean

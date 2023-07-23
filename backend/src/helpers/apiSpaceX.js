@@ -1,6 +1,6 @@
 const axios = require('axios')
 
-const baseURL = 'https://api.spacexdata.com/latest'
+const baseURL = 'https://api.spacexdata.com/v5/'
 
 const api = axios.create({
   baseURL,
@@ -15,13 +15,4 @@ const get = async (endpoint) => {
   }
 }
 
-const post = async (endpoint, data) => {
-  try {
-    const response = await api.post(endpoint, data)
-    return response.data
-  } catch (error) {
-    throw error
-  }
-}
-
-module.exports = { get, post }
+module.exports = { get }

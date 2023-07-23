@@ -12,5 +12,5 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 require('./routes/index')(app)
-
+require('./services/launches/firstLoadData')()
 module.exports = app

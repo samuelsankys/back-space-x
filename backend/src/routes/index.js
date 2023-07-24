@@ -5,6 +5,6 @@ module.exports = (app) => {
   app.get('/status', (req, res) => {
     res.send('All is fine...)')
   })
-  app.get('/', index)
   app.use('/launches', launch)
+  app.get('/', index)
 }

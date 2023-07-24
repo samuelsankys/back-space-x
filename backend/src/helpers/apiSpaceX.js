@@ -1,6 +1,6 @@
 const axios = require('axios')
 
-const baseURL = 'https://api.spacexdata.com/v5/'
+const baseURL = 'https://api.spacexdata.com/'
 
 const api = axios.create({
   baseURL,

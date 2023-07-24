@@ -1,5 +1,5 @@
 const { ok, serverError } = require('../../helpers/http')
-const indexLaunchService = require('../../services/launches/index')
+const indexLaunchService = require('../../services/launches/indexService')
 
 module.exports = async (req, res) => {
   try {

@@ -10,6 +10,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Rockets {
+  id               String    @id
+  name             String    @db.VarChar(255)
+  type             String?   @db.VarChar(255)
+  sequence         Int
+  active           Boolean
+  stages           Int?
+  boosters         Int?
+  cost_per_launch  Int?
+  success_rate_pct Int?
+  first_flight     DateTime? @db.Date
+  country          String?   @db.VarChar(255)
+  company          String?   @db.VarChar(255)
+  wikipedia        String?   @db.VarChar(255)
+  description      String?
+  flickr_images    String[]
+
+  launches Launch[]
+}
+
 model Launch {
   id                        String    @id
   upcoming                  Boolean
@@ -24,7 +44,7 @@ model Launch {
   launchpad                 String    @db.VarChar(255)
   details                   String?
   success                   Boolean?
-  rocket                    String    @db.VarChar(255)
+  rocket_id                 String    @db.VarChar(255)
   window                    Int?
   net                       Boolean
   tbd                       Boolean
@@ -37,6 +57,8 @@ model Launch {
   payloads                  String[]  @db.VarChar(255)
   capsules                  String[]  @db.VarChar(255)
   ships                     String[]  @db.VarChar(255)
+
+  rockets Rockets @relation(fields: [rocket_id], references: [id])
 
   cores    Cores[]
   links    Links?

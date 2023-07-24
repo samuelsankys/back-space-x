@@ -37,7 +37,6 @@ function launchData(data, sequence) {
     launchpad: data.launchpad,
     details: data.details,
     success: data.success,
-    rocket: data.rocket,
     window: data.window,
     net: data.net,
     tbd: data.tbd,
@@ -52,6 +51,7 @@ function launchData(data, sequence) {
     ships: data.ships,
     failures: data.failures,
     sequence: sequence,
+    rockets: { connect: { id: data.rocket } },
   }
 }
 

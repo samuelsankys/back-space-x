@@ -1,19 +1,23 @@
 const { prisma } = require('../helpers/prisma')
 
-exports.findMany = async (where, pageSize, pageNumber) => {
+exports.findMany = async (data, pageSize, pageNumber) => {
   const offset = (pageNumber - 1) * pageSize
-  if (where) {
+  let where = {}
+  where.success = { not: null }
+  if (data) {
     where = {
+      ...where,
       OR: [
         {
           name: {
-            contains: where.search,
+            contains: data.search,
             mode: 'insensitive',
           },
         },
       ],
     }
   }
+
   return await prisma.launch.findMany({
     include: {
       crews: true,
@@ -22,9 +26,13 @@ exports.findMany = async (where, pageSize, pageNumber) => {
       links: true,
       rockets: true,
     },
+
     where,
     take: pageSize,
     skip: offset,
+    orderBy: {
+      flight_number: 'desc',
+    },
   })
 }
 
@@ -35,22 +43,6 @@ exports.listYears = async () => {
       date_utc: 'asc',
     },
   })
-}
-
-exports.findManyCount = async (where) => {
-  if (where) {
-    where = {
-      OR: [
-        {
-          name: {
-            contains: where.search,
-            mode: 'insensitive',
-          },
-        },
-      ],
-    }
-  }
-  return await prisma.launch.count({ where })
 }
 
 exports.findByYearAndRocket = async (year, rocketId) => {

@@ -17,6 +17,12 @@ const themeDefault = createTheme({
     secondary: {
       main: '#D5C67A',
     },
+    error: {
+      main: '#DC3545',
+    },
+    success: {
+      main: '#28A745',
+    },
     warning: {
       main: '#EB5160',
     },
@@ -29,7 +35,7 @@ const themeDefault = createTheme({
       secondary: '#d9d9d9',
       disabled: '#f0f0f0',
     },
-    divider: '#D5C67A'
+    divider: '#D5C67A',
   },
   typography: {
     htmlFontSize: 16,
@@ -41,7 +47,7 @@ const themeDefault = createTheme({
       fontWeight: 600,
       fontSize: '2.375rem',
       lineHeight: 1.21,
-      '@media (max-width:960px)': { 
+      '@media (max-width:960px)': {
         fontSize: '1.375rem',
       },
     },
@@ -49,7 +55,7 @@ const themeDefault = createTheme({
       fontWeight: 600,
       fontSize: '1.875rem',
       lineHeight: 1.27,
-      '@media (max-width:960px)': { 
+      '@media (max-width:960px)': {
         fontSize: '1.5rem',
       },
     },
@@ -105,4 +111,4 @@ const themeDefault = createTheme({
     fontFamily: ['Google Sans', 'Poppins', 'sans-serif'].join(','),
   },
 })
-export default themeDefault;
+export default themeDefault

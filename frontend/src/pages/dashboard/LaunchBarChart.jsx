@@ -1,76 +1,82 @@
 import { useEffect, useState } from 'react';
-import { useTheme } from '@mui/material/styles';
 import ReactApexChart from 'react-apexcharts';
+import { useFetch } from '../../useFetch';
+import {baseURL} from '../../utils/constantes'
 
-const pieChartOptions = {
+const barChartOptions =  {
   chart: {
     type: 'bar',
-    height: 365,
+    height: 350,
+    stacked: true,
     toolbar: {
-      show: false
-    }
+      show: true
+    },
   },
+  responsive: [{
+    breakpoint: 480,
+    options: {
+      legend: {
+        position: 'bottom',
+        offsetX: -10,
+        offsetY: 0
+      }
+    }
+  }],
+  colors: ['#554298', '#FF33FF', '#FEB019', '#58FFC5'],
   plotOptions: {
     bar: {
-      columnWidth: '45%',
-      borderRadius: 4
-    }
-  },
-  dataLabels: {
-    enabled: false
-  },
-  xaxis: {
-    categories: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
-    axisBorder: {
-      show: false
+      horizontal: false,
+      borderRadius: 5,
+      dataLabels: {
+        total: {
+          enabled: true,
+          style: {
+            fontSize: '10px',
+            fontWeight: 900
+          }
+        }
+      }
     },
-    axisTicks: {
-      show: false
-    }
+
   },
-  yaxis: {
-    show: false
+  legend: {
+    position: 'right',
+    offsetY: 40
   },
-  grid: {
-    show: false
+  fill: {
+    opacity: 5
+  },
+  tooltip: {
+    theme: 'light'
   }
 };
 
 
 const LaunchBarChart = () => {
-  const theme = useTheme();
+  const {data, loading} = useFetch(baseURL + '/launches/stats/launch')
 
-  const { primary, secondary } = theme.palette.text;
-  const info = theme.palette.info.light;
-
-  const [series] = useState([
-    {
-      data: [80, 95, 70, 42, 65, 55, 78]
-    }
-  ]);
-
-  const [options, setOptions] = useState(pieChartOptions);
+  const [series, setSeries] = useState([]);
+  const [options, setOptions] = useState(barChartOptions);
 
   useEffect(() => {
-    setOptions((prevState) => ({
-      ...prevState,
-      colors: [info],
-      xaxis: {
-        labels: {
-          style: {
-            colors: [secondary, secondary, secondary, secondary, secondary, secondary, secondary]
-          }
-        }
-      },
-      tooltip: {
-        theme: 'light'
-      }
-    }));
-  }, [primary, info, secondary]);
+    if (data) {
+      setSeries(data.series)
+      setOptions((prevState) => ({
+        ...prevState,
+        xaxis: {
+          type: 'string',
+          categories: data.years,
+        },
+
+      }));
+    }
+  }, [data]);
 
   return (
     <div id="launch-chart">
+      {loading && <p>Loading ...</p>} 
       <ReactApexChart options={options} series={series} type="bar" height={365} />
+
     </div>
   );
 };

@@ -6,7 +6,6 @@ import {
   Typography
 } from '@mui/material';
 import LaunchPieChart from './LaunchPieChart';
-import Search from '../../components/search'
 import LaunchTable from './table';
 import LaunchBarChart from './LaunchBarChart';
 
@@ -67,19 +66,9 @@ const Dashboard = () => {
           </Grid>
           <Grid item />
         </Grid>
-        <Grid>
-            <Search />
-        </Grid>
-        <Card
-            content={false}
-            elevation= {3}
-            sx={{
-            border: '1px solid',
-            borderRadius: 2,
-            }}
-        >
+      
+        
           <LaunchTable />
-        </Card>
       </Grid>
 
     </Grid>

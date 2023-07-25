@@ -20,6 +20,7 @@ exports.findMany = async (where, pageSize, pageNumber) => {
       failures: true,
       cores: true,
       links: true,
+      rockets: true,
     },
     where,
     take: pageSize,

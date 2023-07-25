@@ -1,0 +1,122 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Rockets {
+  id               String    @id
+  name             String    @db.VarChar(255)
+  type             String?   @db.VarChar(255)
+  sequence         Int
+  active           Boolean
+  stages           Int?
+  boosters         Int?
+  cost_per_launch  Int?
+  success_rate_pct Int?
+  first_flight     DateTime? @db.Date
+  country          String?   @db.VarChar(255)
+  company          String?   @db.VarChar(255)
+  wikipedia        String?   @db.VarChar(255)
+  description      String?
+  flickr_images    String[]
+
+  launches Launch[]
+}
+
+model Launch {
+  id                        String    @id
+  upcoming                  Boolean
+  date_precision            String    @db.VarChar(255)
+  date_local                DateTime
+  date_unix                 Int
+  date_utc                  DateTime
+  sequence                  Int
+  name                      String    @db.VarChar(255)
+  flight_number             Int
+  auto_update               Boolean
+  launchpad                 String    @db.VarChar(255)
+  details                   String?
+  success                   Boolean?
+  rocket_id                 String    @db.VarChar(255)
+  window                    Int?
+  net                       Boolean
+  tbd                       Boolean
+  static_fire_date_unix     Int?
+  static_fire_date_utc      DateTime?
+  fairings_reused           Boolean?
+  fairings_recovery_attempt Boolean?
+  fairings_recovered        Boolean?
+  fairings_ships            String[]  @db.VarChar(255)
+  payloads                  String[]  @db.VarChar(255)
+  capsules                  String[]  @db.VarChar(255)
+  ships                     String[]  @db.VarChar(255)
+
+  rockets Rockets @relation(fields: [rocket_id], references: [id])
+
+  cores    Cores[]
+  links    Links?
+  failures Failures[]
+  crews    Crews[]
+}
+
+model Cores {
+  id              String   @id @default(uuid())
+  launch_id       String   @db.VarChar(255)
+  core            String?  @db.VarChar(255)
+  flight          Int?
+  gridfins        Boolean?
+  legs            Boolean?
+  reused          Boolean?
+  landing_attempt Boolean?
+  landing_success Boolean?
+  landing_type    String?  @db.VarChar(255)
+  landpad         String?
+
+  launch Launch @relation(fields: [launch_id], references: [id])
+}
+
+model Failures {
+  id        String  @id @default(uuid())
+  launch_id String  @db.VarChar(255)
+  time      Int?
+  altitude  Int?
+  reason    String? @db.VarChar(255)
+
+  launch Launch @relation(fields: [launch_id], references: [id])
+}
+
+model Crews {
+  id        String  @id @default(uuid())
+  launch_id String  @db.VarChar(255)
+  crew      String? @db.VarChar(255)
+  role      String? @db.VarChar(255)
+
+  launch Launch? @relation(fields: [launch_id], references: [id])
+}
+
+model Links {
+  id              String   @id @default(uuid())
+  launch_id       String   @unique @db.VarChar(255)
+  patch_small     String?  @db.VarChar(255)
+  patch_large     String?  @db.VarChar(255)
+  reddit_campaign String?  @db.VarChar(255)
+  reddit_launch   String?  @db.VarChar(255)
+  reddit_media    String?  @db.VarChar(255)
+  reddit_recovery String?  @db.VarChar(255)
+  presskit        String?  @db.VarChar(255)
+  webcast         String?  @db.VarChar(255)
+  youtube_id      String?  @db.VarChar(255)
+  article         String?  @db.VarChar(255)
+  wikipedia       String?  @db.VarChar(255)
+  flickr_small    String[] @db.VarChar(255)
+  flickr_original String[] @db.VarChar(255)
+
+  launch Launch @relation(fields: [launch_id], references: [id])
+}

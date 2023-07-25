@@ -25,6 +25,15 @@ exports.findMany = async (where, pageSize, pageNumber) => {
   })
 }
 
+exports.listYears = async () => {
+  return await prisma.launch.groupBy({
+    by: ['date_utc'],
+    orderBy: {
+      date_utc: 'asc',
+    },
+  })
+}
+
 exports.findManyCount = async (where) => {
   return await prisma.launch.count({
     where: {
@@ -36,6 +45,25 @@ exports.findManyCount = async (where) => {
           },
         },
       ],
+    },
+  })
+}
+
+exports.findByYearAndRocket = async (year, rocketId) => {
+  return await prisma.launch.findMany({
+    // include: {
+    //   rockets: true,
+    // },
+    where: {
+      date_utc: {
+        gte: new Date(`${year}-01-01T00:00:00.000Z`),
+        lt: new Date(`${+year + 1}-01-01T00:00:00.000Z`),
+      },
+      success: { not: null },
+      rocket_id: rocketId,
+    },
+    orderBy: {
+      date_utc: 'asc',
     },
   })
 }
@@ -52,8 +80,10 @@ exports.create = async (data) => {
   })
 }
 
-exports.count = async () => {
-  return await prisma.launch.count()
+exports.count = async (where) => {
+  return await prisma.launch.count({
+    where: where,
+  })
 }
 
 exports.maxSequence = async () => {

@@ -6,6 +6,26 @@ exports.findById = async (id) => {
   })
 }
 
+exports.findAll = async () => {
+  return await prisma.rockets.findMany()
+}
+
+exports.countSuccess = async (success) => {
+  return await prisma.rockets.findMany({
+    include: {
+      _count: {
+        select: {
+          launches: {
+            where: {
+              success: success,
+            },
+          },
+        },
+      },
+    },
+  })
+}
+
 exports.create = async (data) => {
   return await prisma.rockets.create({
     data: data,

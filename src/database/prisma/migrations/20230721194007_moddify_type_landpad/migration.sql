@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Cores" ALTER COLUMN "landpad" SET DATA TYPE TEXT;

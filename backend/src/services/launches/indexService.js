@@ -7,9 +7,7 @@ module.exports = async (query) => {
   pageSize = pageSize ? parseInt(pageSize) : 10
   pageNumber = pageNumber ? parseInt(pageNumber) : 1
 
-  const where = {
-    search: search,
-  }
+  const where = search ? { search } : undefined
   const results = await launchRepo.findMany(where, pageSize, pageNumber)
   const totalDocs = await launchRepo.findManyCount(where)
   const totalPages = Math.ceil(totalDocs / pageSize)

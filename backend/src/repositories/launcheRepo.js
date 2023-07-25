@@ -2,15 +2,8 @@ const { prisma } = require('../helpers/prisma')
 
 exports.findMany = async (where, pageSize, pageNumber) => {
   const offset = (pageNumber - 1) * pageSize
-
-  return await prisma.launch.findMany({
-    include: {
-      crews: true,
-      failures: true,
-      cores: true,
-      links: true,
-    },
-    where: {
+  if (where) {
+    where = {
       OR: [
         {
           name: {
@@ -19,7 +12,16 @@ exports.findMany = async (where, pageSize, pageNumber) => {
           },
         },
       ],
+    }
+  }
+  return await prisma.launch.findMany({
+    include: {
+      crews: true,
+      failures: true,
+      cores: true,
+      links: true,
     },
+    where,
     take: pageSize,
     skip: offset,
   })
@@ -35,8 +37,8 @@ exports.listYears = async () => {
 }
 
 exports.findManyCount = async (where) => {
-  return await prisma.launch.count({
-    where: {
+  if (where) {
+    where = {
       OR: [
         {
           name: {
@@ -45,8 +47,9 @@ exports.findManyCount = async (where) => {
           },
         },
       ],
-    },
-  })
+    }
+  }
+  return await prisma.launch.count({ where })
 }
 
 exports.findByYearAndRocket = async (year, rocketId) => {

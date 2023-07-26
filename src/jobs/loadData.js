@@ -4,12 +4,15 @@ const formatDataApi = require('../utils/prepareApiDateToLoadDB')
 const formatRocketDataApi = require('../utils/prepareApiRocketDateToLoadDB')
 const launchRepo = require('../repositories/launcheRepo')
 const rocketRepo = require('../repositories/rocketRepo')
+const Discord = require('../helpers/discord')
 
 async function addNewLaunch() {
+  const discord = new Discord()
   try {
     await loadRocket()
     await loadLaunches()
   } catch (error) {
+    await discord.sendMessage(JSON.stringify(error.message))
     console.log(error)
   }
 }

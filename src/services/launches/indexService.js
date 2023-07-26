@@ -8,8 +8,8 @@ module.exports = async (query) => {
   pageNumber = pageNumber ? parseInt(pageNumber) : 1
 
   const where = search ? { search } : undefined
-  const results = await launchRepo.findMany(where, pageSize, pageNumber)
-  const totalDocs = results?.length
+  const { results, count } = await launchRepo.findMany(where, pageSize, pageNumber)
+  const totalDocs = count
   const totalPages = Math.ceil(totalDocs / pageSize)
   const response = {
     hasPrev: pageNumber > 1 && pageNumber <= totalPages + 1,

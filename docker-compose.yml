@@ -23,7 +23,7 @@ services:
       - postgres
     environment:
       DATABASE_URL: "postgresql://postgres:root@postgres:5432/space_x"
-    command: sh -c "npm install && npx prisma generate && sleep 30 && npm start"
+    command: sh -c "npm install && npx prisma generate && npx prisma migrate deploy && sleep 30 && npm start"
     ports:
       - "3563:3563"
 

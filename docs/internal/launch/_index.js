@@ -4,7 +4,6 @@ module.exports = {
     summary: 'Lista todas os lançamentos.',
     description: 'Responsável por listar todos os lançamento e informações básicas do foguete.',
     operationId: 'index-launch',
-    security: [{ token: [] }],
     parameters: [
       {
         name: 'search',

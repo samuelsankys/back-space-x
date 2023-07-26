@@ -4,7 +4,6 @@ module.exports = {
     summary: 'Estatísticas de foguetes lançados.',
     description: 'Estatísticas de informações sobre os foguetes lançados.',
     operationId: 'stats-rocket',
-    security: [{ token: [] }],
     responses: {
       200: {
         description: 'SUCESSO. A requisição foi atendida e resultou em resposta.',

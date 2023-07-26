@@ -6,6 +6,7 @@
   },
   "extends": ["prettier", "eslint:recommended"],
   "plugins": ["prettier"],
+  "ignorePatterns": ["__tests__/**"],
   "overrides": [],
   "parserOptions": {
     "ecmaVersion": "latest"

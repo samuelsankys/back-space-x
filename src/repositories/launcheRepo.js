@@ -2,9 +2,20 @@ const { prisma } = require('../helpers/prisma')
 
 exports.findMany = async (data, pageSize, pageNumber) => {
   const offset = (pageNumber - 1) * pageSize
+  const include = {
+    crews: true,
+    failures: true,
+    cores: true,
+    links: true,
+    rockets: true,
+  }
   let where = {}
   where.success = { not: null }
+
   if (data) {
+    const containsSuccess = 'sucesso'.toLowerCase().includes(data.search)
+    const containsFailed = 'falhou'.toLowerCase().includes(data.search)
+
     where = {
       ...where,
       OR: [
@@ -14,19 +25,27 @@ exports.findMany = async (data, pageSize, pageNumber) => {
             mode: 'insensitive',
           },
         },
+        {
+          rockets: {
+            name: {
+              contains: data.search,
+              mode: 'insensitive',
+            },
+          },
+        },
       ],
+    }
+    if (containsSuccess) {
+      where.OR.push({ success: true })
+    }
+    if (containsFailed) {
+      where.OR.push({ success: false })
     }
   }
 
-  return await prisma.launch.findMany({
-    include: {
-      crews: true,
-      failures: true,
-      cores: true,
-      links: true,
-      rockets: true,
-    },
-
+  const counter = await prisma.launch.findMany({ include, where })
+  const results = await prisma.launch.findMany({
+    include,
     where,
     take: pageSize,
     skip: offset,
@@ -34,6 +53,7 @@ exports.findMany = async (data, pageSize, pageNumber) => {
       flight_number: 'desc',
     },
   })
+  return { results, count: counter.length }
 }
 
 exports.listYears = async () => {
